@@ -1,26 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #151513;
+  --bg-secondary: #1d1d1a;
+  --bg-card: #22221f;
+  --text-primary: #ecebe4;
+  --text-muted: #8e8d86;
+  --accent-orange: #e26228;
+  --accent-orange-hover: #f0743a;
+  --border-subtle: rgba(236, 235, 228, 0.08);
+  --border-medium: rgba(236, 235, 228, 0.15);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #151513;
+  color: #ecebe4;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: #e26228;
+  color: #ffffff;
+}
+
+/* Custom Minimal Velour Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #151513;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b2b27;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e26228;
+}
+
+/* Filmstrip Horizontal Scroll Container */
+.filmstrip-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 2rem;
+}
+.filmstrip-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Velour Minimal Link Underline */
+.velour-link {
+  position: relative;
+  display: inline-block;
+  color: #ecebe4;
+  text-decoration: none;
+  padding-bottom: 2px;
+}
+.velour-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.velour-link:hover::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+/* Service Row Interactive Hover */
+.service-row {
+  border-top: 1px solid rgba(236, 235, 228, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.service-row:hover {
+  border-color: rgba(236, 235, 228, 0.3);
+  padding-left: 0.75rem;
+}
+
+/* Circular Logo Mark */
+.velour-mark-ring {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(236, 235, 228, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+.velour-mark-ring:hover {
+  border-color: #e26228;
+}
+.velour-mark-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #e26228;
+}
+
+/* Luxury Interactive Filmstrip Card Hover Physics */
+.filmstrip-card-item {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.filmstrip-card-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Ambient Pulse Glow */
+@keyframes ambientPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.04);
+  }
+}
+.animate-ambient-pulse {
+  animation: ambientPulse 8s ease-in-out infinite;
+}
+
+/* Radar Ping for Live Recording & Reel Badges */
+@keyframes radarPing {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.animate-radar-ping {
+  animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Subtle Floating Drift */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.animate-float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+/* Smooth Accordion Drawer Animation */
+@keyframes drawerExpand {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-drawer-expand {
+  animation: drawerExpand 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

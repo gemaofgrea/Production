@@ -1,0 +1,39 @@
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cinema Dark Backdrop Badge -->
+  <rect width="32" height="32" rx="7" fill="#151513" />
+  
+  <!-- Outer Cinema Optical Iris -->
+  <circle
+    cx="16"
+    cy="16"
+    r="11"
+    stroke="#ecebe4"
+    stroke-opacity="0.3"
+    stroke-width="1.3"
+    stroke-dasharray="3 2"
+  />
+  
+  <!-- Signature Anamorphic Lens Streak -->
+  <line
+    x1="2.5"
+    y1="16"
+    x2="29.5"
+    y2="16"
+    stroke="#e26228"
+    stroke-width="1.6"
+    stroke-linecap="round"
+  />
+  
+  <!-- Optical Core Housing -->
+  <circle
+    cx="16"
+    cy="16"
+    r="4.5"
+    fill="#151513"
+    stroke="#ecebe4"
+    stroke-width="1.3"
+  />
+  
+  <!-- Luminous Ember Core -->
+  <circle cx="16" cy="16" r="2.2" fill="#e26228" />
+</svg>
