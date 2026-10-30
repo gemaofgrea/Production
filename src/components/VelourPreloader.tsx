@@ -155,7 +155,7 @@ export function VelourPreloader({ onComplete }: VelourPreloaderProps) {
               Aura Productions
             </span>
             <span className="text-[10px] text-[#8e8d86] font-mono block sm:inline sm:ml-2">
-              // STUDIO FILM 4K
+              {"// STUDIO FILM 4K"}
             </span>
           </div>
         </div>

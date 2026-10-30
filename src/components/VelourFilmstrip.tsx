@@ -266,7 +266,7 @@ export function VelourFilmstrip() {
             <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-6">
               <div>
                 <span className="text-xs text-[#e26228] font-mono tracking-widest uppercase">
-                  {selectedProject.num} // {selectedProject.year}
+                  {selectedProject.num} {'//'} {selectedProject.year}
                 </span>
                 <h3 className="text-2xl sm:text-4xl font-light text-[#ecebe4] mt-1">
                   {selectedProject.title}
