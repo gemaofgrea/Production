@@ -66,23 +66,41 @@ export function VelourPreloader({ onComplete }: VelourPreloaderProps) {
         video.play().catch(() => {});
       });
 
-    // Listen for genuine user gestures to enable sound
+    // Listen for any subtle user movement or interaction to seamlessly unlock sound
+    const gestureEvents = [
+      "mousemove",
+      "pointermove",
+      "touchmove",
+      "wheel",
+      "scroll",
+      "pointerdown",
+      "touchstart",
+      "click",
+      "keydown",
+    ];
+
+    let unlocked = false;
     const handleGesture = () => {
+      if (unlocked) return;
+      unlocked = true;
       activateSound();
+      cleanupListeners();
     };
 
-    window.addEventListener("pointerdown", handleGesture, { passive: true });
-    window.addEventListener("click", handleGesture, { passive: true });
-    window.addEventListener("touchstart", handleGesture, { passive: true });
-    window.addEventListener("keydown", handleGesture, { passive: true });
+    const cleanupListeners = () => {
+      gestureEvents.forEach((evt) => {
+        window.removeEventListener(evt, handleGesture);
+      });
+    };
+
+    gestureEvents.forEach((evt) => {
+      window.addEventListener(evt, handleGesture, { passive: true });
+    });
 
     return () => {
-      window.removeEventListener("pointerdown", handleGesture);
-      window.removeEventListener("click", handleGesture);
-      window.removeEventListener("touchstart", handleGesture);
-      window.removeEventListener("keydown", handleGesture);
-      if (videoRef.current) {
-        videoRef.current.pause();
+      cleanupListeners();
+      if (video) {
+        video.pause();
       }
     };
   }, [activateSound]);
@@ -123,8 +141,9 @@ export function VelourPreloader({ onComplete }: VelourPreloaderProps) {
     return () => {
       clearInterval(interval);
       document.body.style.overflow = "";
-      if (videoRef.current) {
-        videoRef.current.pause();
+      const currentVideo = videoRef.current;
+      if (currentVideo) {
+        currentVideo.pause();
       }
     };
   }, [handleEnter]);
@@ -241,25 +260,25 @@ export function VelourPreloader({ onComplete }: VelourPreloaderProps) {
                   Cinema & Film Studio
                 </p>
 
-                {/* Sound Activation Badge */}
+                {/* Sound Activation Status Indicator */}
                 {isMuted ? (
-                  <button
+                  <div
                     onClick={(e) => {
                       e.stopPropagation();
                       activateSound();
                     }}
-                    className="mt-3.5 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#e26228] hover:bg-[#c9521d] text-white text-xs font-mono font-medium tracking-wider shadow-[0_0_25px_rgba(226,98,40,0.6)] animate-pulse hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                    className="mt-3.5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-mono text-[#8e8d86] hover:text-white transition-all cursor-pointer"
                   >
-                    <Volume2 size={14} />
-                    <span>TAP FOR FILM SOUND</span>
-                  </button>
+                    <Volume2 size={13} className="text-[#e26228] animate-pulse" />
+                    <span>AUDIO ARMED · MOVE OR TAP</span>
+                  </div>
                 ) : (
                   <div className="mt-3.5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#e26228]/20 border border-[#e26228]/40 text-xs font-mono text-[#ecebe4]">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-radar-ping absolute inline-flex h-full w-full rounded-full bg-[#e26228]" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e26228]" />
                     </span>
-                    <span className="text-[#e26228] font-semibold">48KHZ SOUND ACTIVE</span>
+                    <span className="text-[#e26228] font-semibold">48KHZ STEREO ACTIVE</span>
                   </div>
                 )}
               </div>
