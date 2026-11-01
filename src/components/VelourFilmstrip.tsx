@@ -32,7 +32,14 @@ export function VelourFilmstrip() {
           modalVideoRef.current.currentTime = 0;
           modalVideoRef.current.muted = false;
           modalVideoRef.current.volume = volume;
-          modalVideoRef.current.play().catch(() => { });
+          modalVideoRef.current.play().catch(() => {
+            // If browser blocks unmuted playback policy, fallback to muted autoplay
+            if (modalVideoRef.current) {
+              modalVideoRef.current.muted = true;
+              setIsMuted(true);
+              modalVideoRef.current.play().catch(() => {});
+            }
+          });
         }
         if (modalAudioRef.current) {
           modalAudioRef.current.currentTime = 0;
@@ -298,6 +305,7 @@ export function VelourFilmstrip() {
                   ref={modalVideoRef}
                   src={selectedProject.videoUrl}
                   poster={selectedProject.image}
+                  preload="metadata"
                   controls
                   autoPlay
                   playsInline
